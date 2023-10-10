@@ -3,6 +3,8 @@ package bg.softuni.pathfinder.model.entities;
 import bg.softuni.pathfinder.model.enums.Level;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "routes")
 public class Route {
@@ -14,12 +16,16 @@ public class Route {
     private String gpxCoordinates;
     @Enumerated(EnumType.STRING)
     private Level level;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
     @Column(name = "name", nullable = false)
     private String name;
     @ManyToOne
     private User author;
     @Column
     private String videoUrl;
+    @ManyToMany
+    private Set<Category> categories;
 
     public Route() {}
 

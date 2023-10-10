@@ -6,20 +6,20 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "messages")
-public class Messages {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "date_time")
     private LocalDateTime dateTime;
-    @Column(name = "text_content")
+    @Column(name = "text_content", nullable = false)
     private String textContent;
     @ManyToOne
     private User author;
     @ManyToOne
     private User recipient;
 
-    public Messages() {
+    public Message() {
     }
 
     public Long getId() {

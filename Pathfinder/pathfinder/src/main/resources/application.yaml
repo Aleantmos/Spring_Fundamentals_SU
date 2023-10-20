@@ -2,8 +2,12 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://localhost:3306/pathfinder?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: root
-    password: Am31109595
+    username: ${db_username}
+    password: ${db_password}
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
   mvc:
     hidden-method:
       filter:

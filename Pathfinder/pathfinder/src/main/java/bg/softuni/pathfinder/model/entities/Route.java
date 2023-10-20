@@ -76,4 +76,16 @@ public class Route {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategories(Set<Category> categories) {
+        this.categories.addAll(categories);
+    }
 }

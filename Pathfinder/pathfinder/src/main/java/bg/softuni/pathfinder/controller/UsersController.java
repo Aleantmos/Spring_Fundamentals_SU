@@ -2,8 +2,7 @@ package bg.softuni.pathfinder.controller;
 
 import bg.softuni.pathfinder.model.dto.UserLoginBindingModel;
 import bg.softuni.pathfinder.model.dto.UserRegisterBindingModel;
-import bg.softuni.pathfinder.service.UserService;
-import bg.softuni.pathfinder.session.LoggedUser;
+import bg.softuni.pathfinder.service.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
-    public UsersController(UserService userService) {
-        this.userService = userService;
+    public UsersController(AuthService authService) {
+        this.authService = authService;
     }
 
     @GetMapping("/login")
@@ -28,7 +27,7 @@ public class UsersController {
     @PostMapping("/login")
     public ModelAndView login(UserLoginBindingModel userLoginBindingModel) {
 
-        boolean isLogged = userService.login(userLoginBindingModel);
+        boolean isLogged = authService.login(userLoginBindingModel);
 
         if (isLogged) {
             return new ModelAndView("redirect:/");
@@ -44,14 +43,15 @@ public class UsersController {
 
     @PostMapping("/register")
     public ModelAndView register(UserRegisterBindingModel userRegisterBindingModel) {
-        this.userService.register(userRegisterBindingModel);
+        this.authService.register(userRegisterBindingModel);
 
         return new ModelAndView("redirect:login");
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ModelAndView logout() {
-        this.userService.logout();
+        this.authService.logout();
+        return new ModelAndView("index");
     }
 
 }

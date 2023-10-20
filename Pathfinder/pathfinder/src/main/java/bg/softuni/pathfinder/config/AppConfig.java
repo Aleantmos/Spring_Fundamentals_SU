@@ -1,5 +1,7 @@
 package bg.softuni.pathfinder.config;
 
+import bg.softuni.pathfinder.model.dto.AddRouteBindingModel;
+import bg.softuni.pathfinder.model.entities.Category;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

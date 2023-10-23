@@ -1,7 +1,7 @@
 package bg.softuni.pathfinder.service.impl;
 
-import bg.softuni.pathfinder.model.dto.UserLoginBindingModel;
-import bg.softuni.pathfinder.model.dto.UserRegisterBindingModel;
+import bg.softuni.pathfinder.model.dto.binding.UserLoginBindingModel;
+import bg.softuni.pathfinder.model.dto.binding.UserRegisterBindingModel;
 import bg.softuni.pathfinder.model.entities.User;
 import bg.softuni.pathfinder.repository.UserRepository;
 import bg.softuni.pathfinder.service.AuthService;
@@ -38,7 +38,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean login(UserLoginBindingModel userLoginBindingModel) {
-        User byUsername = this.userRepository.findByUsername(userLoginBindingModel.getUsername());
+        User byUsername = this.userRepository.findByUsername(userLoginBindingModel.getUsername())
+                .orElse(null);
 
         if (byUsername == null) {
             throw new IllegalArgumentException("User not found exception");

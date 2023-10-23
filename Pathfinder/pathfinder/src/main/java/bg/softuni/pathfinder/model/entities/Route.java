@@ -22,8 +22,10 @@ public class Route {
     private String name;
     @ManyToOne
     private User author;
-    @Column
+    @Column(name = "video_url")
     private String videoUrl;
+    @Column(name = "image_url")
+    private String imageUrl;
     @ManyToMany
     private Set<Category> categories;
 
@@ -61,6 +63,10 @@ public class Route {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public User getAuthor() {
         return author;
     }
@@ -75,6 +81,14 @@ public class Route {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Set<Category> getCategories() {

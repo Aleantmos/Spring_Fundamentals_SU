@@ -45,3 +45,4 @@ spring:
     cache:
       period: 0
 
+binding-result-package: org.springframework.validation.BindingResult.

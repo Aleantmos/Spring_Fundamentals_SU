@@ -1,6 +1,9 @@
 package bg.softuni.pathfinder.service.impl;
 
-import bg.softuni.pathfinder.model.dto.AddRouteBindingModel;
+import bg.softuni.pathfinder.exception.RouteNotFoundException;
+import bg.softuni.pathfinder.model.dto.binding.AddRouteBindingModel;
+import bg.softuni.pathfinder.model.dto.view.RouteDetailsViewModel;
+import bg.softuni.pathfinder.model.dto.view.RouteViewModel;
 import bg.softuni.pathfinder.model.entities.Category;
 import bg.softuni.pathfinder.model.entities.Route;
 import bg.softuni.pathfinder.model.entities.User;
@@ -12,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -43,5 +47,24 @@ public class RouteServiceImpl implements RouteService {
         route.setAuthor(user);
 
         routeRepository.save(route);
+    }
+
+    @Override
+    public List<RouteViewModel> getAllRoutes() {
+        return routeRepository.findAll()
+                .stream()
+                .map(route -> modelMapper.map(route, RouteViewModel.class))
+                .toList();
+    }
+
+    @Override
+    public RouteDetailsViewModel getDetails(Long id) {
+        Route route = routeRepository.findById(id)
+                .orElseThrow(() -> new RouteNotFoundException("No such route"));
+
+        RouteDetailsViewModel routeDetailsViewModel = modelMapper.map(route, RouteDetailsViewModel.class);
+        routeDetailsViewModel.setAuthorName(route.getAuthor().getFullName());
+
+        return routeDetailsViewModel;
     }
 }

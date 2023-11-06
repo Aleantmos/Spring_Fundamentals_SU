@@ -68,17 +68,21 @@
             </div>
             <div class="form-group">
                 <input type="file" name="gpxCoordinates"
+                       th:field="*{gpxCoordinates}"
                        id="inputGpx"
                        class="form-control-file"
                        aria-describedby="inputGpxError">
                 <small id="inputGpxError"
+                       th:errors="*{gpxCoordinates}"
                        class="invalid-feedback  form-text bg-danger rounded">Must be valid GPX Coordinates</small>
             </div>
         </div>
         <div>
             <div class="form-group">
                 <label for="level">Level</label>
-                <select id="level" name="level" class="custom-select" th:value="${addRouteBindingModel.level}">
+                <select id="level" name="level" class="custom-select"
+                        th:field="*{level}"
+                        th:value="${addRouteBindingModel.level}">
                     <option value="" selected disabled>Select level</option>
                     <!-- <option th:each="level : ${levels}" th:text="${level}" th:value="${level}" >Select level</option>-->
                     <option th:each="level : ${T(bg.softuni.pathfinder.model.enums.Level).values()}"
@@ -102,6 +106,7 @@
             <div class="form-group p-3">
                 <label class="p-2" for="categories">Categories:</label>
                 <input th:each="category : ${T(bg.softuni.pathfinder.model.enums.CategoryName).values()}"
+                       th:field="*{categories}"
                        class="m-3"
                        type="checkbox"
                        name="categories"

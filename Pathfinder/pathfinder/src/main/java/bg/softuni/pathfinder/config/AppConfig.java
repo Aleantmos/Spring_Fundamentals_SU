@@ -13,6 +13,7 @@ import bg.softuni.pathfinder.service.CategoryService;
 import bg.softuni.pathfinder.service.RoleService;
 import bg.softuni.pathfinder.service.UserService;
 import bg.softuni.pathfinder.session.LoggedUser;
+import bg.softuni.pathfinder.util.YoutubeUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,6 +53,7 @@ public class AppConfig {
 
         //AddRouteBindingModel -> Route
         Provider<User> loggedUserProvider = req -> getLoggedUser();
+        Provider<String> youtubeSubUrlProvider = req -> YoutubeUtil.getUrl((String) req.getSource());
 
         Converter<Set<CategoryName>, Set<Category>> toEntitySet
                 = ctx -> (ctx.getSource() == null)
@@ -66,7 +68,10 @@ public class AppConfig {
                 .addMappings(mapper -> mapper
                         .when(Conditions.isNull())
                         .with(loggedUserProvider)
-                        .map(AddRouteBindingModel::getAuthor, Route::setAuthor));
+                        .map(AddRouteBindingModel::getAuthor, Route::setAuthor))
+                .addMappings(mapper -> mapper
+                        .with(youtubeSubUrlProvider)
+                        .map(AddRouteBindingModel::getVideoUrl, Route::setVideoUrl));
 
         //UserRegisterBindingModel -> User
         Provider<User> newUserProvider = req -> {

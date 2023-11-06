@@ -60,7 +60,7 @@ img {
     grid-template-columns: repeat(4, 1fr);
 }
 
-.main-nav a {
+.main-nav .my-btn {
     background: var(--primary);
     display: block;
     text-decoration: none;

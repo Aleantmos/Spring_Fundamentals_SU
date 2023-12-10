@@ -9,7 +9,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public ModelAndView adminPanel() {
-        return new ModelAndView();
+        return new ModelAndView("");
     }
 
 }

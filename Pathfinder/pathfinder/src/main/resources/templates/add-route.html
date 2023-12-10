@@ -99,6 +99,10 @@
                        th:field="*{videoUrl}"
                        type="text"
                        class="form-control" placeholder="Video url">
+                <small id="videoUrlError"
+                       th:errors="*{videoUrl}"
+                       class="form-text bg-danger rounded">
+                </small>
             </div>
         </div>
 

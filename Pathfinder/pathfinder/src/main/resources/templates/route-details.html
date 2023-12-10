@@ -40,8 +40,8 @@
             </div>
             <div>
                 <h4>Choose picture</h4>
-                <form action="/" method="POST" enctype="multipart/form-data">
-                    <input  type="hidden" id="id" name="routeId">
+                <form th:action="@{/routes/upload-picture}" th:method="POST" enctype="multipart/form-data">
+                    <input  type="hidden" id="id" name="routeId" th:value="${route.id}">
                     <div class="form-group">
                         <label>
                             <input type="text" name="title">
@@ -117,12 +117,7 @@
     <script th:src="@{/js/comments.js}"></script>
 	-->
 </div>
-<footer class="footer bg-blur rounded">
-    <div class="container-fluid text-center">
-        <div class="h5 text-white">
-            &copy; Lucho, Chocho & Spring Advanced Students 2021. All rights reserved.
-        </div>
-    </div>
+<footer th:replace="~{fragments/footer}" class="footer bg-blur rounded">
 </footer>
 </body>
 </html>

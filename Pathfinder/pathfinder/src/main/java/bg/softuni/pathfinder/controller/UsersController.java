@@ -1,44 +1,55 @@
 package bg.softuni.pathfinder.controller;
 
+import bg.softuni.pathfinder.exception.LoginCredentialsException;
 import bg.softuni.pathfinder.model.dto.binding.UserLoginBindingModel;
 import bg.softuni.pathfinder.model.dto.binding.UserRegisterBindingModel;
 import bg.softuni.pathfinder.model.dto.view.UserProfileViewModel;
 import bg.softuni.pathfinder.service.AuthService;
 import bg.softuni.pathfinder.service.UserService;
+import bg.softuni.pathfinder.session.LoggedUser;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
-    private final AuthService authService;
+    public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult";
+    public static final String DOT = ".";
+    private final AuthService authenticationService;
     private final UserService userService;
 
-    public UsersController(AuthService authService, UserService userService) {
-        this.authService = authService;
+    public UsersController(AuthService authenticationService,
+                           UserService userService) {
+        this.authenticationService = authenticationService;
         this.userService = userService;
     }
 
     @GetMapping("/login")
     public ModelAndView login() {
+
         return new ModelAndView("login");
     }
 
     @PostMapping("/login")
     public ModelAndView login(UserLoginBindingModel userLoginBindingModel) {
 
-        boolean isLogged = authService.login(userLoginBindingModel);
+        authenticationService.login(userLoginBindingModel);
+        return new ModelAndView("redirect:/");
+    }
 
-        if (isLogged) {
-            return new ModelAndView("redirect:/");
-        }
+    @ExceptionHandler(LoginCredentialsException.class)
+    public ModelAndView handleLoginCredentialsError(LoginCredentialsException e,
+                                                    RedirectAttributes redirectAttributes) {
 
-        return new ModelAndView("login");
+        redirectAttributes.addFlashAttribute("badCredentials", true);
+        System.out.println(e.getMessage());
+        return new ModelAndView("redirect:login");
     }
 
     @GetMapping("/register")
@@ -47,23 +58,41 @@ public class UsersController {
         if (!model.containsAttribute("userRegisterBindingModel")) {
             model.addAttribute("userRegisterBindingModel", new UserRegisterBindingModel());
         }
+
         return new ModelAndView("register");
     }
 
     @PostMapping("/register")
-    public ModelAndView register(UserRegisterBindingModel userRegisterBindingModel) {
-        this.authService.register(userRegisterBindingModel);
+    public ModelAndView register(@Valid UserRegisterBindingModel userRegisterBindingModel,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
 
-        return new ModelAndView("redirect:login");
+        final ModelAndView modelAndView = new ModelAndView();
+
+        if (bindingResult.hasErrors()) {
+            final String attributeName = "userRegisterBindingModel";
+            redirectAttributes
+                    .addFlashAttribute(attributeName, userRegisterBindingModel)
+                    .addFlashAttribute(BINDING_RESULT_PATH + DOT + attributeName, bindingResult);
+            modelAndView.setViewName("redirect:register");
+
+        } else {
+
+            this.authenticationService.register(userRegisterBindingModel);
+            modelAndView.setViewName("redirect:login");
+        }
+
+        return modelAndView;
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public ModelAndView logout() {
-        this.authService.logout();
-        return new ModelAndView("index");
+        this.authenticationService.logout();
+
+        return new ModelAndView("redirect:/");
     }
 
-    @GetMapping("/details")
+    @GetMapping("/profile")
     public ModelAndView profile() {
         UserProfileViewModel userProfileViewModel = userService.getUserProfile();
 

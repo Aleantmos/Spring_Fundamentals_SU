@@ -2,48 +2,52 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+  <meta charset="UTF-8"/>
+  <title>Planner App</title>
 
+</head>
+<div class="wrapper">
 <header th:fragment="nav">
-  <nav class="main-nav">
-    <ul>
-      <li>
-        <a href="/">Home</a>
-      </li>
-      <li th:unless="${@loggedUser.isLogged}">
-        <a th:href="@{/users/login}">Login</a>
-      </li>
-      <li th:unless="${@loggedUser.isLogged}">
-        <a th:href="@{/users/register}">Register</a>
-      </li>
-      <li >
-        <a th:href="@{/about}">About</a>
-      </li>
-      <li th:if="${@loggedUser.isLogged}">
-        <a th:href="@{/routes/add}">Add new route</a>
-      </li>
-      <li th:if="${@loggedUser.isLogged}">
-        <a th:href="@{/users/profile}">Profile</a>
-      </li>
-      <li>
-        <a href="/">Admin</a>
-      </li>
-      <li th:if="${@loggedUser.isLogged}">
-        <form th:action="@{/users/logout}" th:method="POST">
-            <input class="my-btn" type="submit" value="Logout" />
-        </form>
-<!--
-        <a th:href="@{/users/logout}">Logout</a>
--->
-      </li>
-      <!--<li>
-          <th:block th:text="${@loggedUser.username} == null ? 'no user' : ${@loggedUser.username}"></th:block>
-      </li>-->
-    </ul>
-  </nav>
+
+      <nav class="main-nav">
+        <ul>
+          <li>
+            <a th:href="@{/}">Home</a>
+          </li>
+          <li th:unless="${@loggedUser.isLogged}">
+            <a th:href="@{/users/login}">Login</a>
+          </li>
+          <li th:unless="${@loggedUser.isLogged}">
+            <a th:href="@{/users/register}">Register</a>
+          </li>
+          <li >
+            <a th:href="@{/about}">About</a>
+          </li>
+          <li th:if="${@loggedUser.isLogged}">
+            <a th:href="@{/routes/add}">Add new route</a>
+          </li>
+          <li th:if="${@loggedUser.isLogged}">
+            <a th:href="@{/users/profile}">Profile</a>
+          </li>
+          <li>
+            <a href="/">Admin</a>
+          </li>
+          <li class="my-btn" th:if="${@loggedUser.isLogged}">
+            <form th:action="@{/users/logout}" th:method="POST">
+                <input type="submit" value="Logout" />
+            </form>
+    <!--
+            <a th:href="@{/users/logout}">Logout</a>
+    -->
+          </li>
+          <!--<li>
+              <th:block th:text="${@loggedUser.username} == null ? 'no user' : ${@loggedUser.username}"></th:block>
+          </li>-->
+        </ul>
+      </nav>
+
 </header>
+</div>
 <body>
 
 </body>

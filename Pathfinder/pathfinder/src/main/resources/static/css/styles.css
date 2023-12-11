@@ -60,7 +60,7 @@ img {
     grid-template-columns: repeat(4, 1fr);
 }
 
-.main-nav .my-btn {
+.main-nav a {
     background: var(--primary);
     display: block;
     text-decoration: none;
@@ -75,6 +75,27 @@ img {
 .main-nav a:hover {
     background: var(--dark);
     color: var(--light);
+}
+
+.main-nav .my-btn {
+    align-items: normal;
+    background-color: rgba(0,0,0,0);
+    border-color: rgb(0, 0, 238);
+    border-style: none;
+    box-sizing: content-box;
+    color: rgb(0, 0, 238);
+    cursor: pointer;
+    display: inline;
+    font: inherit;
+    height: auto;
+    padding: 0;
+    perspective-origin: 0 0;
+    text-align: start;
+    text-decoration: underline;
+    transform-origin: 0 0;
+    width: auto;
+    -moz-appearance: none;
+
 }
 
 /* Top Container */

@@ -22,7 +22,7 @@ public class AddRouteBindingModel {
     private String name;
     @Size(min = 3, max = 20, message = "Description length must be more than 5 characters")
     private String description;
-    @FileAnnotation(contentTypes = "text/xml")
+    //@FileAnnotation(contentTypes = "text/xml")
     private MultipartFile gpxCoordinates;
     private Level level;
 

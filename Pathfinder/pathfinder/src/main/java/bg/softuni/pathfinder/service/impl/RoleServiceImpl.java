@@ -18,7 +18,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getRoleByName (String name) {
-
         return this.roleRepository.findByName(UserRoles.valueOf(name));
+    }
+
+    @Override
+    public int getRoleRepoCount() {
+        return (int) roleRepository.count();
+    }
+
+    @Override
+    public void saveRole(Role role) {
+        roleRepository.save(role);
     }
 }

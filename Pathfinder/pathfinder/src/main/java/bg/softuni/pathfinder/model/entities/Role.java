@@ -2,7 +2,13 @@ package bg.softuni.pathfinder.model.entities;
 
 import bg.softuni.pathfinder.model.enums.UserRoles;
 import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -14,21 +20,4 @@ public class Role {
     @Column(nullable = false)
     private UserRoles name;
 
-    public Role() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserRoles getName() {
-        return name;
-    }
-
-    public void setName(UserRoles name) {
-        this.name = name;
-    }
 }

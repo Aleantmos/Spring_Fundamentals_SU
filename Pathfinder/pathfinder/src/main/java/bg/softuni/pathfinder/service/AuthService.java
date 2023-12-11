@@ -7,7 +7,7 @@ public interface AuthService {
 
     void register(UserRegisterBindingModel userRegisterBindingModel);
 
-    boolean login(UserLoginBindingModel userLoginBindingModel);
+    void login(UserLoginBindingModel userLoginBindingModel);
 
     void logout();
 }

@@ -72,17 +72,29 @@
             <img class="rounded" src="/images/pic4.jpg" height="100%" alt="">
             <img class="rounded" src="/images/pic1.jpg" height="100%" alt="">
         </section>
+
+
+
+
         <section class="comments">
             <h1>Comments</h1>
 
+            <section class="comments">
+                <div class="form-group" th:each="comment : ${route.commentViewModelList}">
+                    <h4 th:text="${comment.content}"></h4>
+                    <label th:text="${comment.authorName}"></label>
+                </div>
+            </section>
+
             <div>
                 <!-- Comments submission -->
-                <form id="commentForm" method="POST"
-                      action="/">
+                <form id="commentForm" th:method="POST"
+                      th:action="@{/comments/create}">
+                    <input  type="hidden" name="routeId" th:value="${route.id}">
                     <div class="form-group">
                         <h4>Leave a comment</h4>
                         <label for="message">Message</label>
-                        <textarea name="message"
+                        <textarea name="textContent"
                                   id="message"
                                   cols="30"
                                   rows="5"

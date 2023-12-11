@@ -16,7 +16,7 @@ public class FileValidator implements ConstraintValidator<FileAnnotation, Multip
 
     @Override
     public void initialize(FileAnnotation constraintAnnotation) {
-        this.size = constraintAnnotation.s();
+        this.size = constraintAnnotation.size();
         this.contentTypes = Arrays.stream(constraintAnnotation.contentTypes()).toList();
         ConstraintValidator.super.initialize(constraintAnnotation);
     }

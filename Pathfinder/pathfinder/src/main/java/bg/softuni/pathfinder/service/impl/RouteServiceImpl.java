@@ -53,6 +53,8 @@ public class RouteServiceImpl implements RouteService {
             route.setGpxCoordinates(filePath);
         }
 
+        //route.setAuthor(loggedUser.getUsername());
+
         routeRepository.save(route);
     }
 
